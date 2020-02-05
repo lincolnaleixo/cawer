@@ -1,0 +1,22 @@
+{
+  "name": "cawer",
+  "productName": "cawer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "helpers for your project",
+  "author": "lincoln",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "latest",
+    "eslint": "latest",
+    "eslint-config-node-script-js": "latest",
+    "eslint-plugin-import": "latest"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.27",
+    "request": "^2.88.0"
+  }
+}
