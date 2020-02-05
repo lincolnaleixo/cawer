@@ -19,7 +19,7 @@ module.exports = {
 
 	sleep(n) {
 
-		console.log(`Sleeping ${n * 1000} seconds`)
+		console.log(`Sleeping ${n} seconds`)
 
 		this.msleep(n * 1000)
 
