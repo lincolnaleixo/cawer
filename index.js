@@ -5,6 +5,7 @@ const fs = require('fs')
 const moment = require('moment-timezone')
 const homedir = require('os')
 	.homedir()
+const shell = require('shell')
 
 const algorithm = 'aes-256-cbc'
 const key = crypto.randomBytes(32)
@@ -73,7 +74,7 @@ module.exports = {
 
 	removeZerosValues(data) {
 
-		for (let i = 0; i < data.length; i++) {
+		for (let i = 0; i < data.length; i += 1) {
 
 			for (const attribute in data[i]) {
 
@@ -116,7 +117,7 @@ module.exports = {
 
 	},
 
-	async savingImage(imageUrl, dir, sku) {
+	savingImage(imageUrl, dir, sku) {
 
 		try {
 
@@ -132,25 +133,23 @@ module.exports = {
 
 				}
 
-				return 'no image'
-
 			}
-
-			return 'no image'
 
 		} catch (error) {
 
-			// logger.error(`Error on gettingImage: ${error}`);
+			console.log(`Error on gettingImage: ${error}`)
 
 		}
 
+		return 'no image'
+
 	},
 
-	async download(uri, filename) {
+	download(uri, filename) {
 
 		try {
 
-			request.head(uri, (err, res, body) => {
+			request.head((uri) => {
 
 				request(uri)
 					.pipe(fs.createWriteStream(filename))
@@ -158,6 +157,8 @@ module.exports = {
 			})
 
 		} catch (e) {
+
+			console.log(`Error on download: ${e}`)
 
 			return false
 
@@ -167,7 +168,7 @@ module.exports = {
 
 	},
 
-	async getFullTodayDate() {
+	getFullTodayDate() {
 
 		const date = new Date()
 		let d = `${date.getFullYear()}-`
@@ -182,7 +183,7 @@ module.exports = {
 
 	},
 
-	async convertToAmazonTime(date) {
+	convertToAmazonTime(date) {
 
 		return moment(date)
 			.tz('America/Los_Angeles')
@@ -190,7 +191,7 @@ module.exports = {
 
 	},
 
-	async formatDateLA(dateLA) {
+	formatDateLA(dateLA) {
 
 		const date = new Date(dateLA)
 		let d = `${date.getFullYear()}-`
@@ -212,7 +213,7 @@ module.exports = {
 
 	},
 
-	async formatCurrenctyUSD(value) {
+	formatCurrenctyUSD(value) {
 
 		const formatter = new Intl.NumberFormat('en-US', {
 			style: 'currency',
@@ -223,7 +224,7 @@ module.exports = {
 
 	},
 
-	async timeConversion(millisec) {
+	timeConversion(millisec) {
 
 		const seconds = (millisec / 1000).toFixed(1)
 		const minutes = (millisec / (1000 * 60)).toFixed(1)
@@ -252,14 +253,14 @@ module.exports = {
 
 	},
 
-	async isDev() {
+	isPkg() {
 
 		return path.join(__dirname, '')
 			.indexOf('app.asar') < 0
 
 	},
 
-	async detailedError(err) {
+	detailedError(err) {
 
 		let log = ''
 		if (typeof err === 'object') {
@@ -288,7 +289,7 @@ module.exports = {
 
 	},
 
-	async getEnvironmentPath() {
+	getEnvironmentPath() {
 
 		let dir
 		switch (process.platform) {
@@ -312,7 +313,7 @@ module.exports = {
 
 	},
 
-	async createSystemFolders(dir) {
+	createSystemFolders(dir) {
 
 		shell.mkdir('-p', dir)
 		shell.mkdir('-p', path.join(dir, 'database'))
