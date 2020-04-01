@@ -1,0 +1,31 @@
+{
+  "name": "cawer",
+  "productName": "cawer",
+  "version": "1.0.2",
+  "main": "index.js",
+  "license": "GPL3",
+  "description": "helpers for your project",
+  "author": "lincoln",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-node-script-js": "^1.0.9"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.28",
+    "node-fetch": "^2.6.0",
+    "random-js": "^2.1.0",
+    "request": "^2.88.2",
+    "shell": "^0.5.0",
+    "xml2js": "^0.4.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lincolnaleixo/cawer"
+  },
+  "bugs": {
+    "url": "https://github.com/lincolnaleixo/cawer/issues"
+  },
+  "homepage": "https://github.com/lincolnaleixo/cawer#readme"
+}
