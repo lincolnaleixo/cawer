@@ -2,7 +2,7 @@
   "name": "cawer",
   "productName": "cawer",
   "version": "1.0.3",
-  "main": "index.js",
+  "main": "src/cawer.js",
   "license": "GPL3",
   "description": "helpers for your project",
   "author": "lincoln",
@@ -18,6 +18,7 @@
     "random-js": "^2.1.0",
     "request": "^2.88.2",
     "shell": "^0.5.0",
+    "winston": "^3.2.1",
     "xml2js": "^0.4.23"
   },
   "repository": {

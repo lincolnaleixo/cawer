@@ -9,37 +9,48 @@ const { Random } = require('random-js')
 const util = require('util')
 const fetch = require('node-fetch')
 const { parseString } = require('xml2js')
+const streamPipeline = util.promisify(require('stream').pipeline)
+const Logger = require('../lib/logger')
 
 const algorithm = 'aes-256-cbc'
 const key = crypto.randomBytes(32)
 let iv = crypto.randomBytes(16)
-const streamPipeline = util.promisify(require('stream').pipeline)
 
-module.exports = {
+class Cawer {
+
+	constructor() {
+
+		this.feature = 'cawer'
+
+		this.logger = new Logger(this.feature)
+		this.logger = this.logger.get()
+
+	}
+
 	msleep(n) {
 
 		Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n)
 
-	},
+	}
 
 	sleep(n) {
 
-		console.log(`Sleeping ${n} seconds`)
+		this.logger.debug(`Sleeping ${n} seconds`)
 
 		this.msleep(n * 1000)
 
-	},
+	}
 
 	msRandomSleep(msMin, msMax) {
 
 		const random = new Random()
 		const randomMs = random.integer(msMin, msMax)
 
-		console.log(`Sleeping ${randomMs} miliseconds`)
+		this.logger.debug(`Sleeping ${randomMs} miliseconds`)
 
 		this.msleep(randomMs)
 
-	},
+	}
 
 	isXml(string) {
 
@@ -48,7 +59,7 @@ module.exports = {
 
 		return false
 
-	},
+	}
 
 	randomSleep(secondsMin, secondsMax) {
 
@@ -56,12 +67,12 @@ module.exports = {
 		// 	.random() * (+(secondsMax * 1000) - +(secondsMin * 1000))
 		// 		+ +(secondsMin * 1000), 10)
 		//
-		// console.log(`Sleeping ${randomMs / 1000} seconds`)
+		// this.logger.debug(`Sleeping ${randomMs / 1000} seconds`)
 
 		this.msleep(this
 			.msRandomSleep(secondsMin * 1000, secondsMax * 1000))
 
-	},
+	}
 
 	formatBytes(a, b) {
 
@@ -83,7 +94,8 @@ module.exports = {
 
 		return `${parseFloat((a / c ** f).toFixed(d))} ${e[f]}`
 
-	},
+	}
+
 	getOS() {
 
 		let osName = 'Other'
@@ -94,7 +106,7 @@ module.exports = {
 
 		return osName
 
-	},
+	}
 
 	removeZerosValues(data) {
 
@@ -116,7 +128,7 @@ module.exports = {
 
 		return newData
 
-	},
+	}
 
 	encrypt(text) {
 
@@ -128,7 +140,7 @@ module.exports = {
 			iv: iv.toString('hex'), encryptedData: encrypted.toString('hex'),
 		}
 
-	},
+	}
 
 	decrypt(text) {
 
@@ -141,7 +153,7 @@ module.exports = {
 
 		return decrypted.toString()
 
-	},
+	}
 
 	savingImage(imageUrl, dir, sku) {
 
@@ -163,13 +175,13 @@ module.exports = {
 
 		} catch (error) {
 
-			console.log(`Error on gettingImage: ${error}`)
+			this.logger.error(`Error on gettingImage: ${error}`)
 
 		}
 
 		return 'no image'
 
-	},
+	}
 
 	async download(uri, filename = false) {
 
@@ -186,7 +198,7 @@ module.exports = {
 
 		} catch (e) {
 
-			console.log(`Error on download: ${e}`)
+			this.logger.error(`Error on download: ${e}`)
 
 			return false
 
@@ -194,7 +206,7 @@ module.exports = {
 
 		return true
 
-	},
+	}
 
 	getFullTodayDate() {
 
@@ -209,7 +221,7 @@ module.exports = {
 
 		return d
 
-	},
+	}
 
 	convertToAmazonTime(date) {
 
@@ -217,7 +229,7 @@ module.exports = {
 			.tz('America/Los_Angeles')
 			.format('YYYY-MM-DDTHH:mm:ss.SSS')
 
-	},
+	}
 
 	formatDateLA(dateLA) {
 
@@ -233,13 +245,13 @@ module.exports = {
 
 		return d
 
-	},
+	}
 
 	async fileExists(pathDb) {
 
 		return !!(await fs.existsSync(pathDb))
 
-	},
+	}
 
 	formatCurrenctyUSD(value) {
 
@@ -250,7 +262,7 @@ module.exports = {
 
 		return formatter.format(value)
 
-	},
+	}
 
 	timeConversion(millisec) {
 
@@ -279,14 +291,14 @@ module.exports = {
 
 		return `${days} Days`
 
-	},
+	}
 
 	isPkg() {
 
 		return path.join(__dirname, '')
 			.indexOf('app.asar') < 0
 
-	},
+	}
 
 	detailedError(err) {
 
@@ -315,7 +327,7 @@ module.exports = {
 
 		return log
 
-	},
+	}
 
 	getEnvironmentPath() {
 
@@ -339,7 +351,7 @@ module.exports = {
 
 		return dir
 
-	},
+	}
 
 	createSystemFolders(dir) {
 
@@ -355,6 +367,7 @@ module.exports = {
 		shell.mkdir('-p', path.join(dir, 'database', 'history', 'inventory'))
 		shell.mkdir('-p', path.join(dir, 'database', 'history', 'products'))
 
-	},
+	}
 
 }
+module.exports = Cawer
