@@ -10,6 +10,7 @@ const util = require('util')
 const fetch = require('node-fetch')
 const { parseString } = require('xml2js')
 const streamPipeline = util.promisify(require('stream').pipeline)
+const os = require('os') // Comes with node.js
 const Logger = require('../lib/logger')
 
 const algorithm = 'aes-256-cbc'
@@ -100,9 +101,10 @@ class Cawer {
 
 		let osName = 'Other'
 
-		if (this.osType === 'darwin') osName = 'Mac'
-		else if (this.osType === 'linux') osName = 'Linux'
-		else if (this.osType.indexOf('win') > -1) osName = 'Windows'
+		if (os.type() === 'darwin') osName = 'Mac'
+		else if (os.type() === 'linux') osName = 'Linux'
+		else if (os.type()
+			.indexOf('win') > -1) osName = 'Windows'
 
 		return osName
 
