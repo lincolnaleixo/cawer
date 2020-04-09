@@ -1,7 +1,7 @@
 {
   "name": "cawer",
   "productName": "cawer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "src/cawer.js",
   "license": "GPL3",
   "description": "helpers for your project",
