@@ -101,9 +101,12 @@ class Cawer {
 
 		let osName = 'Other'
 
-		if (os.type() === 'darwin') osName = 'Mac'
-		else if (os.type() === 'linux') osName = 'Linux'
+		if (os.type()
+			.toLowerCase() === 'darwin') osName = 'Mac'
 		else if (os.type()
+			.toLowerCase() === 'linux') osName = 'Linux'
+		else if (os.type()
+			.toLowerCase()
 			.indexOf('win') > -1) osName = 'Windows'
 
 		return osName
