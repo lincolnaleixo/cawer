@@ -70,8 +70,7 @@ class Cawer {
 		//
 		// this.logger.debug(`Sleeping ${randomMs / 1000} seconds`)
 
-		this.msleep(this
-			.msRandomSleep(secondsMin * 1000, secondsMax * 1000))
+		this.msRandomSleep(secondsMin * 1000, secondsMax * 1000)
 
 	}
 
